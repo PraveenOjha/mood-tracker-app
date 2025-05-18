@@ -82,22 +82,24 @@ useEffect(() => {
   return (
     <>
       {isRunning && (
-        <Confetti
-          width={width}
-          height={height}
-          recycle={false} // Don't loop the animation
-          numberOfPieces={200} // Number of confetti pieces
-          gravity={0.1} // Controls how fast pieces fall
-          tweenDuration={4000} // Animation duration for each piece
-          colors={getConfettiColors()} // HACKATHON JUDGE NOTE: Using ARGB colors for confetti particles.
-          onConfettiComplete={() => {
-            // Ensure state is false when animation finishes, even if timer didn't run
-            setIsRunning(false);
-            onComplete?.(); // Call optional complete handler
-          }}
-          // Add z-index to ensure it's on top of other content
-          style={{ zIndex: 1000, pointerEvents: 'none', background: 'var(--color-background-light)', backgroundColor: 'var(--color-background-light)' }} // Make it non-interactive
-        />
+        <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none', zIndex: 9999 }}>
+          <Confetti
+            width={width}
+            height={height}
+            recycle={false} // Don't loop the animation
+            numberOfPieces={200} // Number of confetti pieces
+            gravity={0.1} // Controls how fast pieces fall
+            tweenDuration={4000} // Animation duration for each piece
+            colors={getConfettiColors()} // HACKATHON JUDGE NOTE: Using ARGB colors for confetti particles.
+            onConfettiComplete={() => {
+              // Ensure state is false when animation finishes, even if timer didn't run
+              setIsRunning(false);
+              onComplete?.(); // Call optional complete handler
+            }}
+            // Add z-index to ensure it's on top of other content
+            style={{ zIndex: 1000, pointerEvents: 'none', background: 'var(--color-background-light)', backgroundColor: 'var(--color-background-light)' }} // Make it non-interactive
+          />
+        </div>
       )}
        {/* HACKATHON JUDGE NOTE: Visual Design: Confetti animation triggered by 'joy' mood log. */}
     </>
