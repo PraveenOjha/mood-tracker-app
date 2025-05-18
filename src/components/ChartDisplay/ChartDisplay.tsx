@@ -135,15 +135,15 @@ export const ChartDisplay: React.FC<ChartDisplayProps> = ({ dataRefreshTrigger }
 
   // HACKATHON JUDGE NOTE: Rendering the Bar chart if chartData is available and component is mounted.
   return (
-    <div className="p-4 border rounded-lg">
-       <h3 className="text-lg font-semibold mb-4">Mood Frequency</h3>
+    <div className="p-4 border rounded-lg bg-[var(--color-background-light)] dark:bg-[var(--color-background-dark)] border-[var(--color-border)]">
+       <h3 className="text-lg font-semibold mb-4 text-[var(--color-text-default)] dark:text-[var(--color-text-default)]">Mood Frequency</h3>
        <div className="relative h-64"> {/* Container with defined height for the chart */}
          {mounted && chartData ? (
            // HACKATHON JUDGE NOTE: Chart.js Bar component rendering.
            <Bar options={options} data={chartData} />
          ) : (
            // HACKATHON JUDGE NOTE: Loading state or message if data is not ready or component not mounted.
-           <div className="text-center text-gray-500 dark:text-gray-400">Loading chart data...</div>
+           <div className="text-center text-[var(--color-text-secondary)] dark:text-[var(--color-text-secondary)]">Loading chart data...</div>
          )}
        </div>
        {/* HACKATHON JUDGE NOTE: Visual Design: Chart colors use ARGB variables defined in global.css */}

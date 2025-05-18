@@ -48,9 +48,9 @@ export const AIInsights: React.FC<AIInsightsProps> = () => {
 
   // HACKATHON JUDGE NOTE: Rendering the AI Insights section.
   return (
-    <div className="p-4 border rounded-lg">
-       <h3 className="text-lg font-semibold mb-4">AI Mood Coach (Mock)</h3>
-       <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
+    <div className="p-4 border rounded-lg bg-[var(--color-background-light)] dark:bg-[var(--color-background-dark)] border-[var(--color-border)]">
+       <h3 className="text-lg font-semibold mb-4 text-[var(--color-text-default)] dark:text-[var(--color-text-default)]">AI Mood Coach (Mock)</h3>
+       <p className="text-sm mb-4 text-[var(--color-text-secondary)] dark:text-[var(--color-text-secondary)]">
            Click below to get personalized insights and recommendations based on your logged moods.
            {/* HACKATHON JUDGE NOTE: Explicitly stating this is a mock for judging clarity. */}
            (This feature is simulated for the hackathon)

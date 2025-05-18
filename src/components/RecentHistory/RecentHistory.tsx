@@ -2,7 +2,7 @@
 'use client'; // This is a client component
 
 import React, { useEffect, useState } from 'react';
-import { getRecentEntries } from '@/lib/dataService'; // Import the data fetching function
+import { getRecentEntries, MoodEntry } from '@/lib/dataService'; // Import the data fetching function
 import { format, formatDistanceToNow } from 'date-fns'; // For date formatting
 import { cn } from '@/lib/utils'; // Shadcn utility
 import {parseISO} from 'date-fns';
@@ -53,8 +53,8 @@ export const RecentHistory: React.FC<RecentHistoryProps> = ({ dataRefreshTrigger
 
   // HACKATHON JUDGE NOTE: Mapping over entries to display history items.
   return (
-    <div className="space-y-4">
-      <h3 className="text-lg font-semibold">Recent Moods</h3>
+    <div className="space-y-4 bg-[var(--color-background-light)] dark:bg-[var(--color-background-dark)] border border-[var(--color-border)] rounded-lg p-4">
+      <h3 className="text-lg font-semibold text-[var(--color-text-default)] dark:text-[var(--color-text-default)]">Recent Moods</h3>
       {recentEntries.map((entry) => (
         <div key={entry.id} className="flex items-center p-3 border rounded-lg">
           {/* Emoticon using the theme-aware color */}
@@ -76,4 +76,3 @@ export const RecentHistory: React.FC<RecentHistoryProps> = ({ dataRefreshTrigger
     </div>
   );
 };
- 

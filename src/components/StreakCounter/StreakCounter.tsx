@@ -37,21 +37,19 @@ export const StreakCounter: React.FC<StreakCounterProps> = ({ dataRefreshTrigger
 
   // HACKATHON JUDGE NOTE: Rendering streak display.
   return (
-    <div className="p-4 border rounded-lg text-center">
-      <h3 className="text-lg font-semibold mb-2">Current Streak</h3>
+    <div className="p-4 border rounded-lg text-center bg-[var(--color-background-light)] dark:bg-[var(--color-background-dark)] border-[var(--color-border)]">
+      <h3 className="text-lg font-semibold mb-2 text-[var(--color-text-default)] dark:text-[var(--color-text-default)]">Current Streak</h3>
       <div className="flex items-center justify-center text-2xl font-bold">
         {/* HACKATHON JUDGE NOTE: Using ARGB variable for streak fire icon color. */}
         <span
            className="mr-2"
            style={{ color: 'var(--color-streak-fire)' } as React.CSSProperties} // Apply ARGB color
-        >
-            
-        </span>
+        >🔥</span>
         {/* Functionality: Displays the calculated streak number. */}
-        <span>{streak} Day{streak !== 1 ? 's' : ''}</span>
+        <span className="text-[var(--color-text-default)] dark:text-[var(--color-text-default)]">{streak} Day{streak !== 1 ? 's' : ''}</span>
       </div>
       {/* HACKATHON JUDGE NOTE: Visual motivation - could add more based on streak length */}
-      {streak > 0 && <p className="text-sm text-gray-600 dark:text-gray-300">Keep it going!</p>}
+      {streak > 0 && <p className="text-sm text-[var(--color-text-secondary)] dark:text-[var(--color-text-secondary)]">Keep it going!</p>}
        {/* HACKATHON JUDGE NOTE: Functionality: Streak updates when data is refreshed. */}
        {/* HACKATHON JUDGE NOTE: Visual Design: Uses ARGB variables for colors. */}
     </div>

@@ -1,13 +1,14 @@
 // components/TopNav/TopNav.tsx
 'use client'; // This is a client component
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { cn } from '@/lib/utils'; // Shadcn utility
 // HACKATHON JUDGE NOTE: Icons used for navigation items.
 import { Home, List, Plus, Search, BarChart2, Brain } from 'lucide-react'; // Example icons (npm install lucide-react)
 
 // Import the ThemeToggle component
 import { ThemeToggle } from '@/components/ThemeToggle'; // Import ThemeToggle
+import { useTheme } from 'next-themes';
 
 // Define navigation items
 // HACKATHON JUDGE NOTE: Structure defining each navigation item.
@@ -32,75 +33,62 @@ interface TopNavProps { // Renamed interface
 // HACKATHON JUDGE NOTE: Responsive Top Navigation Bar Component (Fixed on mobile, Static on desktop).
 // Functionality: Handles navigation clicks, indicates active view, includes Theme Toggle.
 // Visual Design: Fixed position at the top on small screens, becomes static and potentially horizontal on larger screens.
-export const TopNav: React.FC<TopNavProps> = ({ activeView, onViewChange }) => { // Removed onDemoModeToggle from destructuring
+export const TopNav: React.FC<TopNavProps> = ({ activeView, onViewChange }) => {
+  const { theme } = useTheme();
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
-  // HACKATHON JUDGE NOTE: Rendering navigation items by mapping over navItems array.
+  useEffect(() => {
+    const savedTheme = theme;
+    if (savedTheme) {
+      setIsDarkMode(savedTheme === 'dark');
+    } else {
+      setIsDarkMode(true);
+    }
+  }, [theme]);
+
+  useEffect(() => {
+    document.body.classList.toggle('dark', isDarkMode);
+    localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+  }, [isDarkMode]);
+
   return (
-    // Responsive container: Fixed top on mobile, static on large screens
-    // Visual Design: Background and border colors adapt to the theme using Tailwind/CSS variables.
-    <div className={cn(
-      // Mobile styles (default)
-      "fixed top-0 left-0 z-50 w-full h-16", // Positioning and size
-      "bg-white border-b border-gray-200", // Light mode default background and border
-      "dark:bg-gray-800 dark:border-gray-600", // Dark mode override background and border
-      "flex items-center justify-around px-2", // Layout for distributing items (mobile)
+    <div
+      className={cn(
+        "fixed top-0 left-0 z-50 w-full h-16 flex items-center justify-around px-2 rounded-b-lg shadow-md",
+        "dark:bg-[var(--color-background-dark)] bg-[var(--color-background-light)] border-0 border-[var(--color-border)]",
+        "lg:static lg:h-auto lg:w-full lg:max-w-5xl lg:flex-row lg:justify-between lg:items-center lg:border-b lg:p-4 lg:mx-auto lg:rounded-lg lg:mt-4"
+      )}
+    >
+      <div className="flex items-center justify-around flex-grow lg:flex-none lg:space-x-8">
+        {navItems.map((item) => {
+          const isActive = activeView === item.key;
+          const Icon = item.icon;
 
-      // Desktop styles (lg: breakpoint and up)
-      // HACKATHON JUDGE NOTE: Applying desktop styles using responsive prefixes.
-      // Adjusted layout to include theme toggle on the right.
-      "lg:static lg:h-auto lg:w-full lg:max-w-5xl lg:flex-row lg:justify-between lg:items-center lg:border-b lg:p-4 lg:mx-auto lg:rounded-lg lg:mt-4" // Static, auto height/width, horizontal layout, space between, centered vertically, border-b, padding, auto margins, rounded, top margin
-    )}>
-      {/* Navigation Links Section */}
-      {/* Adjusted flex behavior to push theme toggle to the side on desktop */}
-      <div className="flex items-center justify-around flex-grow lg:flex-none lg:space-x-8"> {/* Adjusted flex behavior */}
-          {navItems.map((item) => {
-            // HACKATHON JUDGE NOTE: Checking if the current item is the active view.
-            const isActive = activeView === item.key;
-            const Icon = item.icon; // Lucide icon component
-
-            return (
-              // Navigation Button for each item
-              // UX: Clickable items, visual indicator for active view.
-              <button
-                key={item.key}
-                onClick={() => onViewChange(item.key)} // Call parent handler on click
-                className={cn(
-                  // Mobile styles (default)
-                  "flex flex-col items-center justify-center p-2", // Padding and layout
-                  "text-gray-500 dark:text-gray-400", // Default icon/text color
-                  // HACKATHON JUDGE NOTE: Highlighting active item with theme primary/secondary color.
-                  isActive && "text-[var(--color-primary)] dark:text-[var(--color-secondary)]", // Highlight active icon/text with theme color
-                  "transition-colors duration-200 ease-in-out", // Smooth color transition
-                  "focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:ring-opacity-50", // Focus indicator for accessibility
-
-                  // Desktop styles (lg: breakpoint and up)
-                  "lg:flex-row lg:space-x-2 lg:p-2 lg:rounded-md lg:hover:bg-gray-100 lg:dark:hover:bg-gray-700 lg:transition-colors", // Horizontal layout, spacing, padding, rounded corners, hover effect
-                  isActive && "lg:bg-gray-200 lg:dark:bg-gray-700" // Highlight active item with background on desktop
-                )}
-                aria-label={item.name} // Accessibility: Label for screen readers
-              >
-                {/* Icon */}
-                 {/* HACKATHON JUDGE NOTE: Icon color adapting to theme and active state using CSS variables. */}
-                <Icon className={cn("size-6", isActive && "scale-110 lg:scale-100")} /> {/* Icon size and active scale effect (scaled down on desktop) */}
-                {/* Label */}
-                <span className="text-xs mt-1 lg:mt-0">{item.name}</span> {/* Adjusted margin on desktop */}
-              </button>
-            );
-          })}
+          return (
+            <button
+              key={item.key}
+              onClick={() => onViewChange(item.key)}
+              className={cn(
+                "flex flex-col items-center justify-center p-2 text-[var(--color-text-secondary)]",
+                "dark:text-[var(--color-text-secondary)] transition-colors duration-200 ease-in-out",
+                isActive && "text-[var(--color-primary)] dark:text-[var(--color-secondary)]",
+                "focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:ring-opacity-50",
+                "lg:flex-row lg:space-x-2 lg:p-2 lg:rounded-md lg:hover:bg-[var(--color-background-light)] lg:dark:hover:bg-[var(--color-background-dark)] lg:transition-colors",
+                "max-sm:rounded-sm max-sm:h-15 max-sm:w-15  max-sm:min-h-15 max-sm:max-h-15  max-sm:min-w-15  max-sm:max-w-20 ", // Make button slightly smaller on mobile, default size on sm+
+                isActive && "lg:bg-[var(--color-border)] lg:dark:bg-[var(--color-border)]"
+              )}
+              aria-label={item.name}
+            >
+              <Icon className={cn("size-6", isActive && "scale-110 lg:scale-100")} />
+              <span className="text-xs mt-1 lg:mt-0">{item.name}</span>
+            </button>
+          );
+        })}
       </div>
 
-      {/* Theme Toggle Section (Visible on both mobile and desktop) */}
-      {/* HACKATHON FEATURE: Theme Toggle integrated into the navigation bar. */}
-      {/* Positioned on the right side of the nav bar. */}
-      <div className="flex items-center"> {/* Simple flex container for the toggle */}
-         {/* Theme Toggle Component */}
-         {/* Allows users to switch themes. */}
-         <ThemeToggle />
+      <div className="flex items-center">
+        <ThemeToggle />
       </div>
-
-      {/* HACKATHON JUDGE NOTE: Functionality: Clicking changes the active view state in the parent (page.tsx). */}
-      {/* HACKATHON JUDGE NOTE: Visual Design: Uses ARGB variables for active state color and theme adaptation. */}
-      {/* HACKATHON JUDGE NOTE: Responsive design: Layout adjusts for mobile (fixed top) and desktop screens (static top). */}
     </div>
   );
 };

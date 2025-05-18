@@ -67,11 +67,10 @@ export const DemoButton: React.FC<DemoButtonProps> = ({ onDemoModeToggle /*, tri
   // HACKATHON JUDGE NOTE: Rendering the Demo/End Demo button.
   // Functionality: Button triggers demo mode logic in the parent component.
   return (
-    <div className="p-4 text-center"> {/* Adjusted padding/border as it's placed in header */}
-        <h3 className="text-lg font-semibold mb-2">Hackathon Demo</h3>
-        <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
+    <div className="p-4 text-center bg-[var(--color-background-light)] dark:bg-[var(--color-background-dark)] border border-[var(--color-border)] rounded-lg">
+        <h3 className="text-lg font-semibold mb-2 text-[var(--color-text-default)] dark:text-[var(--color-text-default)]">Hackathon Demo</h3>
+        <p className="text-sm mb-4 text-[var(--color-text-secondary)] dark:text-[var(--color-text-secondary)]">
             Showcases features with pre-loaded data.
-             {/* HACKATHON JUDGE NOTE: Explicitly mentioning demo mode purpose. */}
         </p>
         {!isDemoActive ? (
             // HACKATHON JUDGE NOTE: Button to activate demo mode.

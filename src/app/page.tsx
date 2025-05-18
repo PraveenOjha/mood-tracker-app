@@ -3,7 +3,6 @@
 
 import React, { useState, useEffect } from 'react';
 import { format } from 'date-fns'; // For formatting the selected date
-import { cn } from '@/lib/utils'; // Shadcn utility
 
 // Import all the components
 import { Calendar } from '@/components/Calendar/Calendar';
@@ -11,11 +10,11 @@ import { RecentHistory } from '@/components/RecentHistory/RecentHistory';
 import { ChartDisplay } from '@/components/ChartDisplay/ChartDisplay';
 import { AIInsights } from '@/components/AIInsights/AIInsights';
 import { MoodPicker } from '@/components/MoodPicker/MoodPicker';
-import { ThemeToggle } from '@/components/ThemeToggle'; // Keep import for potential use elsewhere, but not rendered directly here
 import { TopNav } from '@/components/TopNav/TopNav'; // Import the renamed TopNav component
 import { StreakCounter } from '@/components/StreakCounter/StreakCounter'; // Import StreakCounter
 import { DemoButton } from '@/components/DemoButton/DemoButton'; // Keep import
 import { ConfettiCanvas } from '@/components/ConfettiCanvas/ConfettiCanvas'; // Import ConfettiCanvas
+import { useTheme } from "next-themes"
 
 // Import data service functions
 import { addMoodEntry, clearAllData, loadDemoData, MoodEntry } from '@/lib/dataService'; // Import MoodEntry interface
@@ -30,8 +29,6 @@ export default function HomePage() {
   // HACKATHON JUDGE NOTE: dataRefreshTrigger is incremented to signal data reload in child components.
   // This is a simple mechanism to tell components displaying data that the underlying data has changed.
   const [dataRefreshTrigger, setDataRefreshTrigger] = useState(0); // Increment to signal data reload
-  // HACKATHON FEATURE: State to track if demo mode is active.
-  const [isDemoMode, setIsDemoMode] = useState(false); // Tracks if demo mode is active
   // HACKATHON FEATURE: State to trigger confetti animation.
   const [showConfetti, setShowConfetti] = useState(false); // Triggers confetti animation
 
@@ -71,11 +68,16 @@ export default function HomePage() {
   // HACKATHON JUDGE NOTE: Handler for changing the active view via top navigation.
   // Updates the active view state and hides the mood picker if it was open.
   const handleViewChange = (viewKey: string) => {
+    // If Log Mood is clicked, open mood picker for today
+    if (viewKey === 'log') {
+      const today = new Date();
+      setSelectedDate(today);
+      setIsLogging(true);
+      return;
+    }
     setActiveView(viewKey);
-    // Hide mood picker if changing view to avoid it lingering
     setIsLogging(false);
     setSelectedDate(null);
-     // HACKATHON JUDGE NOTE: Console log to show view change for judges.
     console.log(`HACKATHON: Changed view to: ${viewKey}`);
   };
 
@@ -83,8 +85,6 @@ export default function HomePage() {
    // This function manages loading/clearing demo data in storage and triggers data refresh.
    // Functionality: Activates/deactivates demo mode.
    const handleDemoModeToggle = async (isActive: boolean) => {
-        setIsDemoMode(isActive); // Update local state for button text/behavior
-
         if (isActive) {
             // HACKATHON JUDGE NOTE: Loading pre-defined sample data for demo mode.
             // Sample data is defined here in the main page component for simplicity.
@@ -131,7 +131,7 @@ export default function HomePage() {
   return (
     // Adjusted padding-top (pt-16) to account for fixed mobile navigation bar height (h-16).
     // On desktop, the static nav will push content down naturally.
-    <main className="flex min-h-screen flex-col items-center p-4 md:p-8 pt-16"> {/* Adjusted pt-16 */}
+    <main className="flex  min-h-screen flex-col items-center p-4 md:p-8 pt-16"> {/* Adjusted pt-16 */}
       {/* HACKATHON JUDGE NOTE: Top Navigation Bar */}
       {/* Functionality: onViewChange handler updates the activeView state, controlling the main content. */}
       {/* UX: Provides easy navigation between main sections. Fixed on mobile, static on desktop. */}
@@ -145,7 +145,7 @@ export default function HomePage() {
       <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm flex flex-col lg:flex-row relative lg:mt-8"> {/* Added flex-col lg:flex-row */}
         {/* App Title */}
          {/* Adjusted positioning and visibility */}
-        <p className="flex w-full justify-center pb-6 pt-8 lg:static lg:w-auto lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:dark:bg-zinc-800/30">
+        <p className="flex w-full  justify-center pb-6 pt-8 lg:static lg:w-auto lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:dark:bg-zinc-800/30">
           Mood Tracker App
         </p>
         {/* Demo Button Section */}

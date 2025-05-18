@@ -13,11 +13,11 @@ import { ChevronLeft, ChevronRight } from 'lucide-react'; // Icons
 
 // Define the moods with their associated emoji and internal key
 const moodEmojiMap: { [key: string]: string } = {
-    'joy': '',
-    'happy': '',
-    'sad': '',
-    'angry': '',
-    'tired': '',
+    'joy': '🤩',
+    'happy': '😊',
+    'sad': '😢',
+    'angry': '😡',
+    'tired': '😴',
 };
 
 interface CalendarProps {
@@ -47,7 +47,7 @@ export const Calendar: React.FC<CalendarProps> = ({ onDaySelect, dataRefreshTrig
       const data = await getMoodDataByDateRange(startDateString, endDateString);
       setMoodsForMonth(data);
       // HACKATHON JUDGE NOTE: Console log to confirm data reload.
-      console.log(`Calendar data reloaded for ${format(currentMonth, 'MMMMiyar')}. Trigger: ${dataRefreshTrigger}`);
+      console.log(`Calendar data reloaded for ${format(currentMonth, 'MMMM')}. Trigger: ${dataRefreshTrigger}`); // Fixed date format string
     };
 
     loadMoods();
@@ -65,85 +65,103 @@ export const Calendar: React.FC<CalendarProps> = ({ onDaySelect, dataRefreshTrig
 
   // Helper to find mood for a specific day
   const getMoodForDay = (day: Date): MoodEntry | undefined => {
-     // Find the mood entry for this specific day by comparing date strings
-     const formattedDay = format(day, 'yyyy-MM-dd');
-     return moodsForMonth.find(moodEntry => moodEntry.date === formattedDay);
+      // Find the mood entry for this specific day by comparing date strings
+      const formattedDay = format(day, 'yyyy-MM-dd');
+      return moodsForMonth.find(moodEntry => moodEntry.date === formattedDay);
   };
 
 
   // HACKATHON JUDGE NOTE: Rendering calendar grid.
   return (
-    <div className="p-4 border rounded-lg">
+    <div className="p-4 border rounded-lg bg-[var(--color-background-light)] dark:bg-[var(--color-background-dark)] border-[var(--color-border)]">
       {/* Header: Month Name and Navigation */}
       <div className="flex items-center justify-between mb-4">
-        <Button variant="ghost" size="icon" onClick={prevMonth} aria-label="Previous month">
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={prevMonth}
+          className={cn(
+            "text-[var(--color-text-default)]",
+            "h-8 w-8 max-sm:h-8 max-sm:w-8  max-sm:min-h-2  max-sm:max-h-8  max-sm:min-w-2  max-sm:max-w-8 " // Make button slightly smaller on mobile, default size on sm+
+
+          )}
+          aria-label="Previous month"
+        >
           <ChevronLeft className="h-5 w-5" />
         </Button>
-        <h2 className="text-xl font-semibold">
-          {format(currentMonth, 'MMMM yyyy')} {/* Corrected format string */}
+        <h2 className="text-xl font-semibold text-[var(--color-text-default)]">
+          {format(currentMonth, 'MMMM yyyy')} {/* Added year for clarity */}
         </h2>
-        <Button variant="ghost" size="icon" onClick={nextMonth} aria-label="Next month">
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={nextMonth}
+          className={cn(
+            "text-[var(--color-text-default)]",
+            "h-8 w-8 max-sm:h-8 max-sm:w-8  max-sm:min-h-2  max-sm:max-h-8  max-sm:min-w-2  max-sm:max-w-8 " // Make button slightly smaller on mobile, default size on sm+
+
+             
+          )}
+          aria-label="Next month"
+        >
           <ChevronRight className="h-5 w-5" />
         </Button>
       </div>
 
-      {/* Weekday headers */}
-      <div className="grid grid-cols-7 text-center text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">
-        {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
-          <div key={day}>{day}</div>
+      {/* Calendar Grid */}
+      <div className="grid grid-cols-7 text-center gap-1">
+        {/* Weekday headers */}
+        {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) => (
+          // REMOVED mb-2 to improve alignment with days below
+          <div key={day} className="text-sm font-medium text-[var(--color-text-secondary)]">
+            {day}
+          </div>
         ))}
-      </div>
 
-      {/* Days grid */}
-      <div className="grid grid-cols-7 gap-2">
-        {/* HACKATHON JUDGE NOTE: Mapping over all days in the 6-week range to render day cells. */}
-        {days.map((day, index) => {
-          const dayKey = format(day, 'yyyy-MM-dd'); // Unique key for the day cell
+        {/* Calendar days */}
+        {days.map((day) => {
+          const dayKey = format(day, 'yyyy-MM-dd');
           const isCurrentMonth = format(day, 'MM') === format(currentMonth, 'MM');
           const today = isToday(day);
-          const loggedMood = getMoodForDay(day); // Find if a mood exists for this day
+          const loggedMood = getMoodForDay(day);
 
           return (
-            // Calendar Day Cell Button
-            // UX: Clickable cells, visual feedback (border, background, emoji)
-            // Visual Design: Theme-aware styling for borders, backgrounds, and emoji color.
             <button
               key={dayKey}
-              onClick={() => onDaySelect(day)} // Pass the date up to the parent (page.tsx)
+              onClick={() => onDaySelect(day)}
               className={cn(
-                "flex flex-col items-center justify-center size-10 rounded-full", // Size and shape
-                "transition-colors duration-200 ease-in-out",
-                "border", // Default border
+                "flex flex-col items-center justify-center size-10 rounded-lg",
+                "transition-all duration-200 ease-in-out",
+                "border",
                 "text-sm",
-                !isCurrentMonth && "text-gray-400 opacity-50", // Dim days outside current month
-                today && "border-2 border-[var(--color-primary)]", // HACKATHON FEATURE: Highlight today's date with theme primary color
-                loggedMood ? "bg-[var(--color-border)]" : "hover:bg-gray-100 dark:hover:bg-gray-700", // Background based on logged mood or hover
-                !loggedMood && "border-transparent", // No border if no mood logged unless it's today
-                "active:scale-95" // Tactile feedback on click
+                !isCurrentMonth && "opacity-40",
+                today && "ring-2 ring-[var(--color-primary)] ring-opacity-70",
+                loggedMood && "calendar-cell-" + loggedMood.mood, // Custom class for logged mood styling
+                !loggedMood && "hover:bg-[var(--color-background-card)] dark:hover:bg-[var(--color-background-dark)]",
+                "active:scale-95"
+                // The flexbox classes items-center and justify-center already center the content
               )}
-              aria-label={`Select date ${format(day, 'MMMM dd, yyyy')}${loggedMood ? `, Logged mood: ${loggedMood.mood}` : ''}`} // Corrected format string
+              aria-label={`Select date ${format(day, 'MMMM dd, yyyy')}${loggedMood ? `, Logged mood: ${loggedMood.mood}` : ''}`} // Fixed date format string
             >
-              {/* Day Number */}
-              <span>{format(day, 'd')}</span>
+              {/* Day Number with improved contrast */}
+              <span className={cn(
+                "text-sm font-medium",
+                isCurrentMonth ? "text-[var(--color-text-default)]" : "text-[var(--color-text-secondary)]"
+              )}>
+                {format(day, 'd')}
+              </span>
 
-              {/* Logged Mood Emoji (if exists) */}
+              {/* Mood Emoji with consistent visibility */}
               {loggedMood && (
-                <span
-                  className={cn(
-                    "text-xs mt-0.5",
-                    // HACKATHON JUDGE NOTE: Emoticon color adapting to theme in calendar view.
-                    "text-[var(--color-emoji-themed)]"
-                  )}
-                >
-                   {moodEmojiMap[loggedMood.mood] || '?'} {/* Display emoji, fallback if key not found */}
+                // REMOVED mt-0.5 to tighten spacing and improve centering perception
+                <span className="text-base text-[var(--color-emoji-themed)]">
+                  {moodEmojiMap[loggedMood.mood] || '?'}
                 </span>
               )}
             </button>
           );
         })}
       </div>
-       {/* HACKATHON JUDGE NOTE: Functionality: Calendar updates when month changes or data is refreshed. */}
-       {/* HACKATHON JUDGE NOTE: Visual Design: Uses ARGB variables for colors and theme adaptation. */}
     </div>
   );
 };

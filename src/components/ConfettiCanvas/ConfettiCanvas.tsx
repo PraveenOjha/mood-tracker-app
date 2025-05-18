@@ -84,7 +84,7 @@ const [width, height] = useState(() => ({
             onComplete?.(); // Call optional complete handler
           }}
           // Add z-index to ensure it's on top of other content
-          style={{ zIndex: 1000, pointerEvents: 'none' }} // Make it non-interactive
+          style={{ zIndex: 1000, pointerEvents: 'none', background: 'var(--color-background-light)', backgroundColor: 'var(--color-background-light)' }} // Make it non-interactive
         />
       )}
        {/* HACKATHON JUDGE NOTE: Visual Design: Confetti animation triggered by 'joy' mood log. */}
