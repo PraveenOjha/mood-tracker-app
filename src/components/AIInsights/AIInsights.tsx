@@ -6,6 +6,7 @@ import { loadMoodData } from '@/lib/dataService'; // Load data for analysis
 import { generateMockInsight, generateMockRecommendation } from '@/lib/aiMock'; // Import mock AI functions
 import { Button } from '@/components/ui/button'; // Example using Shadcn Button
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 interface AIInsightsProps {
   // No specific props needed for this basic version
 }

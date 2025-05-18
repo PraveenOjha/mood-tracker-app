@@ -3,7 +3,7 @@
 // HACKATHON JUDGE NOTE: All application data saving and loading logic is encapsulated here.
 
 import localforage from 'localforage';
-import { format, parseISO, isDate } from 'date-fns'; // Use parseISO for ISO 8601 strings
+import {  parseISO, isDate } from 'date-fns'; // Use parseISO for ISO 8601 strings
 
 // HACKATHON JUDGE NOTE: Interface defining the structure of a mood entry.
 export interface MoodEntry {
@@ -36,6 +36,7 @@ export const loadMoodData = async (): Promise<MoodEntry[]> => {
 
     // Optional: Basic validation to ensure loaded items match MoodEntry structure
     // For a hackathon, this might be overkill, but good practice.
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const validData = loadedData.filter((item: any) =>
        item && typeof item.id === 'string' &&
        typeof item.date === 'string' &&

@@ -4,7 +4,7 @@
 import React, { useEffect, useState } from 'react';
 import { cn } from '@/lib/utils'; // Shadcn utility
 // HACKATHON JUDGE NOTE: Icons used for navigation items.
-import { Home, List, Plus, Search, BarChart2, Brain } from 'lucide-react'; // Example icons (npm install lucide-react)
+import { Home, List, Plus,  BarChart2, Brain } from 'lucide-react'; // Example icons (npm install lucide-react)
 
 // Import the ThemeToggle component
 import { ThemeToggle } from '@/components/ThemeToggle'; // Import ThemeToggle

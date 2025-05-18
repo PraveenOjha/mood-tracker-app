@@ -4,7 +4,7 @@
 import React, { useEffect, useState } from 'react';
 import { loadMoodData } from '@/lib/dataService'; // Load all data
 import { calculateCurrentStreak } from '@/lib/moodUtils'; // Utility for streak calculation
-import { cn } from '@/lib/utils'; // Shadcn utility
+
 
 interface StreakCounterProps {
   dataRefreshTrigger: number; // Prop to trigger data reload

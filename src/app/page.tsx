@@ -1,7 +1,7 @@
 // app/page.tsx
 'use client'; // This is a client component
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { format } from 'date-fns'; // For formatting the selected date
 
 // Import all the components
@@ -14,7 +14,7 @@ import { TopNav } from '@/components/TopNav/TopNav'; // Import the renamed TopNa
 import { StreakCounter } from '@/components/StreakCounter/StreakCounter'; // Import StreakCounter
 import { DemoButton } from '@/components/DemoButton/DemoButton'; // Keep import
 import { ConfettiCanvas } from '@/components/ConfettiCanvas/ConfettiCanvas'; // Import ConfettiCanvas
-import { useTheme } from "next-themes"
+
 
 // Import data service functions
 import { addMoodEntry, clearAllData, loadDemoData, MoodEntry } from '@/lib/dataService'; // Import MoodEntry interface

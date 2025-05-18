@@ -1,7 +1,7 @@
 // lib/moodUtils.ts
 // HACKATHON FEATURE: Utility functions for mood data processing.
 
-import { isSameDay, subDays, format, parseISO } from 'date-fns';
+import {   subDays, format, parseISO } from 'date-fns';
 import { MoodEntry } from './dataService'; // Import MoodEntry interface
 
 // Calculate the current mood logging streak
@@ -64,6 +64,7 @@ export const calculateCurrentStreak = (moodData: MoodEntry[]): number => {
 // Aggregate mood data for chart display
 // HACKATHON JUDGE NOTE: Function to aggregate mood data for charting.
 // Example: Aggregate counts of each mood over a period (e.g., last 30 days)
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const aggregateMoodData = (moodData: MoodEntry[], period: 'day' | 'week' | 'month' | 'all'): { labels: string[], data: number[], colors: string[], borderColors: string[] } => {
    // HACKATHON JUDGE NOTE: Data aggregation logic for charts.
    if (!moodData || moodData.length === 0) {

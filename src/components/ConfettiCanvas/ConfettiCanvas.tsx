@@ -14,12 +14,24 @@ interface ConfettiCanvasProps {
 
 export const ConfettiCanvas: React.FC<ConfettiCanvasProps> = ({ trigger, onComplete }) => {
 // HACKATHON JUDGE NOTE: Getting window size for confetti canvas dimensions.
-  //find width and height of viewport
-const [width, height] = useState(() => ({
-    width: typeof window !== 'undefined' ? window.innerWidth : 800,
-    height: typeof window !== 'undefined' ? window.innerHeight : 600,
-  }));
-  const [isRunning, setIsRunning] = useState(false);
+// Find width and height of viewport
+const [width, setWidth] = useState(
+  typeof window !== 'undefined' ? window.innerWidth : 800
+);
+const [height, setHeight] = useState(
+  typeof window !== 'undefined' ? window.innerHeight : 600
+);
+const [isRunning, setIsRunning] = useState(false);
+
+// Optional: Update width/height on window resize
+useEffect(() => {
+  function handleResize() {
+    setWidth(window.innerWidth);
+    setHeight(window.innerHeight);
+  }
+  window.addEventListener('resize', handleResize);
+  return () => window.removeEventListener('resize', handleResize);
+}, []);
 
   // HACKATHON JUDGE NOTE: Effect to start/stop confetti based on the 'trigger' prop.
   useEffect(() => {
