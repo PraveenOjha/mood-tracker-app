@@ -1,36 +1,33 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# MoodTrack Pro 🎨🎯
 
-## Getting Started
+**A smart mood tracker with adaptive UI, streaks, and AI insights**  
+*Hackathon Submission - Built to impress judges with delightful interactions*
 
-First, run the development server:
+[![Live Demo]()
+[![Video Walkthrough]()
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+<div align="center">
+https://i.ibb.co/1YRLrLMt/img1.png
+https://i.ibb.co/ym9KJ0k0/img2.png
+https://i.ibb.co/8Lr5ZW8Y/Untitled-video-Made-with-Clipchamp-1.gif
+https://i.ibb.co/JR0PCPh9/Untitled-video-Made-with-Clipchamp.gif
+  <img src="[https://i.ibb.co/8Lr5ZW8Y/Untitled-video-Made-with-Clipchamp-1.gif]" width="45%" alt="Theme switching demo"/>
+  <img src="[https://i.ibb.co/JR0PCPh9/Untitled-video-Made-with-Clipchamp.gif]" width="45%" alt="Streak celebration"/> 
+</div>
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## ✨ Judge-Friendly Features
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Feature | Highlights |
+|---------|------------|
+| **Dynamic UI Themes** |
+| **Confetti Celebrations** | particle effects for joy mood |
+| **Smart Demo Mode** | Auto-populates data for instant judging (press demo button) |
+| **AI-Powered Insights** | Mock ai analysis of mood patterns ("You're happiest on Fridays") |
+| **One-Click Editing** | Fix entries by re-logging moods |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🚀 30-Second Judge Experience
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. **Landing Page**: Notice clean dark/light mode toggle
+2. **Log a Mood**: See UI adapt to selected emoji
+3. **Trigger Demo Mode**: press "demo" to auto-fill  data
+4. **View AI Insights**: after 10 streak see ai insight on that 
