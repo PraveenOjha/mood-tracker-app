@@ -3,10 +3,8 @@
 **A smart mood tracker with adaptive UI, streaks, and AI insights**  
 *Hackathon Submission - Built to impress judges with delightful interactions*
 
-[![Live Demo](https://i.ibb.co/8Lr5ZW8Y/Untitled-video-Made-with-Clipchamp-1.gif
-)
-[![Video Walkthrough](https://i.ibb.co/JR0PCPh9/Untitled-video-Made-with-Clipchamp.gif
-)
+[![Live Demo](https://i.ibb.co/8Lr5ZW8Y/Untitled-video-Made-with-Clipchamp-1.gif)]
+[![Video Walkthrough](https://i.ibb.co/JR0PCPh9/Untitled-video-Made-with-Clipchamp.gif)]
 
 <div align="center">
   <img src="[https://i.ibb.co/8Lr5ZW8Y/Untitled-video-Made-with-Clipchamp-1.gif]" width="45%" alt="Theme switching demo"/>
